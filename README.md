@@ -1,4 +1,4 @@
-<img width="519" height="911" alt="image" src="https://github.com/user-attachments/assets/490920a8-34f1-40a4-984a-e6dc1b3b327b" /># Практическое задание № 4 Борисов Денис Александрович ЭФМО-01-25
+# Практическое задание № 4 Борисов Денис Александрович ЭФМО-01-25
 
 Цели:
 
@@ -16,16 +16,11 @@
 
 <img width="291" height="270" alt="image" src="https://github.com/user-attachments/assets/69d5c9c2-7903-483d-bea0-e6c2f7da1aad" />
 
-
 После были инициализация модулей и установка зависимостей
 
 <img width="732" height="199" alt="Снимок экрана 2025-10-07 152241" src="https://github.com/user-attachments/assets/58cbff8c-6cff-4543-95ef-d2d798c36492" />
 
 2. Модель и «хранилище» в памяти
-
-После был запущен сервер и проверен в браузере:
-
-<img width="1918" height="719" alt="image" src="https://github.com/user-attachments/assets/29276571-1443-421f-b5cf-9bfab3d31b4d" />
 
 После был написан код для model.go и для repo.go
 
