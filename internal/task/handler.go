@@ -28,7 +28,54 @@ func (h *Handler) Routes() chi.Router {
 }
 
 func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, h.repo.List())
+	query := r.URL.Query()
+	var doneFilter *bool
+	if d := query.Get("done"); d != "" {
+		if done, err := strconv.ParseBool(d); err == nil {
+			doneFilter = &done
+		}
+	}
+
+	allTasks := h.repo.List()
+	var filteredTasks []*Task
+
+	for _, task := range allTasks {
+		if doneFilter == nil || task.Done == *doneFilter {
+			filteredTasks = append(filteredTasks, task)
+		}
+	}
+
+	page := 1
+	if p := query.Get("page"); p != "" {
+		if newPage, err := strconv.Atoi(p); err == nil && newPage > 0 {
+			page = newPage
+		}
+	}
+
+	limit := 10
+	if l := query.Get("limit"); l != "" {
+		if newLimit, err := strconv.Atoi(l); err == nil && newLimit > 0 {
+			limit = newLimit
+		}
+	}
+
+	start := (page - 1) * limit
+	end := start + limit
+	if start > len(filteredTasks) {
+		start = len(filteredTasks)
+	}
+	if end > len(filteredTasks) {
+		end = len(filteredTasks)
+	}
+
+	result := filteredTasks[start:end]
+
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"tasks": result,
+		"total": len(filteredTasks),
+		"page":  page,
+		"limit": limit,
+	})
 }
 
 func (h *Handler) get(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +103,7 @@ func (h *Handler) create(w http.ResponseWriter, r *http.Request) {
 	}
 	title := strings.TrimSpace(req.Title)
 	if len(title) < 3 || len(title) > 100 {
-		httpError(w, http.StatusBadRequest, "Длина должна быть <3 и >100")
+		httpError(w, http.StatusBadRequest, "Длина должна быть >3 и <100")
 		return
 	}
 	t := h.repo.Create(req.Title)
@@ -80,7 +127,7 @@ func (h *Handler) update(w http.ResponseWriter, r *http.Request) {
 	}
 	title := strings.TrimSpace(req.Title)
 	if len(title) < 3 || len(title) > 100 {
-		httpError(w, http.StatusBadRequest, "Длина должна быть <3 и >100")
+		httpError(w, http.StatusBadRequest, "Длина должна быть >3 и <100")
 		return
 	}
 	t, err := h.repo.Update(id, req.Title, req.Done)
