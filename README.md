@@ -106,6 +106,28 @@
 
 <img width="707" height="698" alt="image" src="https://github.com/user-attachments/assets/b343762f-af01-4dd6-95f4-c0cc9914e642" />
 
+2 - 3. Пагинация списка: GET /tasks?page=1&limit=10 и Фильтр по done: GET /tasks?done=true.
 
+Для реализации задания был расширен код в headler.go 
+
+<img width="484" height="818" alt="image" src="https://github.com/user-attachments/assets/8f68145d-ac7c-4a9b-ab86-c827a3abffaa" />
+
+Демонстрация работы пагинации при запросе
+
+<img width="429" height="875" alt="image" src="https://github.com/user-attachments/assets/7e7e6a34-9096-4de4-84a0-e1277ccbe9e6" />
+
+Демонстрация фильрации для все выполненных заданий
+
+<img width="448" height="676" alt="image" src="https://github.com/user-attachments/assets/9820a380-7245-4770-b3a5-dd1b65374350" />
+
+4. Простое «сохранение» на диск (при старте читать JSON-файл, при изменениях — сохранять).
+
+Для реализации возможности сохранения данных был расширен код в repo.go 
+
+<img width="381" height="776" alt="image" src="https://github.com/user-attachments/assets/9192652a-bb63-49c0-b8ee-039dae981104" />
+
+При введение данных, создается файл JSON куда записываются все созданные данные. После рестарта сервера данные востанавливаются из этого файла
+
+<img width="800" height="707" alt="image" src="https://github.com/user-attachments/assets/9158edaa-0073-4a69-aadd-baee8b48dfb0" />
 
 
